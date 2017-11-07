@@ -21,7 +21,7 @@ class User extends CI_Controller {
             $this->session->unset_userdata('username');
 
             if($this->input->post()){
-                $username = $this->input->post('username');
+                $data['username'] = $username = $this->input->post('username');
                 $password = $this->input->post('password');
 
                 $user = $this->User_model->get(array('username' => $username));
@@ -31,7 +31,7 @@ class User extends CI_Controller {
                    $data['message'] = "Usuário e/ou senha Inválidos";
                 }else{
                     $this->session->set_userdata('username', $username);
-                    $this->load->view('assistance');
+                    redirect(base_url('assistance/dash'));
                     return true;
                 }
                 

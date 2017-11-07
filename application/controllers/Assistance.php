@@ -21,7 +21,13 @@ class Assistance extends CI_Controller {
             $data['doctors'] = $this->Doctor_model->get_all();
             $data['agreements'] = $this->Agreement_model->get_all();
 
-            $this->load->view('assistance');
+            $this->load->view('assistance_insert');
+        }
+        
+        public function dash(){
+            if(!$this->session->userdata('username')){ redirect('user/login'); return false; }
+
+            $this->load->view('assistance_list');
         }
         
         // Function for update datatable via AJAX
@@ -80,6 +86,7 @@ class Assistance extends CI_Controller {
                 return true;
 
 	}
+        
         
         public function save(){
             if(!$this->session->userdata('username')){ redirect('user/login'); return false; }
