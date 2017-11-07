@@ -21,63 +21,66 @@ class Assistance_model extends MY_Model
 
 	var $order = array('id' => 'asc'); // default order
 
-	private function _get_datatables_query(){
-		
-		$this->db->from($this->table);
-		$i = 0;
-	
-		foreach ($this->column_search as $item) // loop column 
-		{
-			if(@$_POST['search']['value']) // if datatable send POST for search
-			{
-				
-				if($i===0) // first loop
-				{
-					$this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
-					$this->db->like($item, $_POST['search']['value']);
-				}
-				else
-				{
-					$this->db->or_like($item, $_POST['search']['value']);
-				}
+	private function _get_datatables_query($search_value=false, $post_order=false){
 
-				if(count($this->column_search) - 1 == $i) //last loop
-					$this->db->group_end(); //close bracket
-			}
-			$i++;
-		}
-		
-		if(null !== @$_POST['order']) // here order processing
-		{
-			$this->db->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
-		} 
-		else if(isset($this->order))
-		{
-			$order = $this->order;
-			$this->db->order_by(key($order), $order[key($order)]);
-		}
+            $this->db->from($this->table);
+            $i = 0;
+
+            foreach ($this->column_search as $item) // loop column 
+            {
+                    if($search_value) // if datatable send POST for search
+                    {
+
+                            if($i===0){ // first loop
+                                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                                    $this->db->like($item, $search_value);
+                            }else{
+                                    $this->db->or_like($item, $search_value);
+                            }
+
+                            if(count($this->column_search) - 1 == $i) //last loop
+                                    $this->db->group_end(); //close bracket
+                    }
+                    $i++;
+            }
+
+            if($post_order) // here order processing
+            {
+                    $this->db->order_by($this->column_order[$post_order['0']['column']], $post_order['0']['dir']);
+            } 
+            else if(isset($this->order))
+            {
+                    $order = $this->order;
+                    $this->db->order_by(key($order), $order[key($order)]);
+            }
 	}
 
-	function get_datatables()
-	{
-		$this->_get_datatables_query();
-		if(@$_POST['length'] != -1)
-		$this->db->limit(@$_POST['length'], @$_POST['start']);
-		$query = $this->db->get();
-		return $query->result();
+	function get_datatables($start=false, $length=false, $search_value=false, $post_order=false, $p_start=false, $p_end=false){
+            $this->_get_datatables_query($search_value, $post_order);
+            
+            if($length != -1)
+                $this->db->limit($length, $start);
+            
+            $query = $this->db->get();
+
+            if($p_start != false)
+                $query = $this->db->where('date >=',$p_start);
+            
+            if($p_end != false)
+                $query = $this->db->where('date <=',$p_end);
+            
+            return $query->result();
 	}
 
-	function count_filtered()
-	{
-		$this->_get_datatables_query();
-		$query = $this->db->get();
-		return $query->num_rows();
+	function count_filtered($search_value=false, $post_order=false){
+            $this->_get_datatables_query($search_value, $post_order);
+            $query = $this->db->get();
+            return $query->num_rows();
 	}
 
-	public function count_all()
-	{
-		$this->db->from($this->table);
-		return $this->db->count_all_results();
+	public function count_all(){
+            $this->db->from($this->table);
+            return $this->db->count_all_results();
 	}
 
         
