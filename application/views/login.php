@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -12,7 +13,7 @@
     <title>Rien</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap.min.css')?>" rel="stylesheet">
+    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap.min.css');?>" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<?=base_url('assets/main.css?ver=1.5');?>" rel="stylesheet">
@@ -20,6 +21,12 @@
   </head>
 
   <body class="main">
+
+    <!-- Alerts -->
+    <div class="panel-alert alert alert-success text-center alert-dismissable fade in" id="modal-success">
+    </div>
+    <div class="panel-alert alert alert-danger text-center alert-dismissable fade in" id="modal-danger">
+    </div>
 
     <div class="container">
 
@@ -37,7 +44,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="input-email">Usuário</label>
-                                        <input class="form-control" id="input-email" name="username" placeholder="seu usuário" type="text" autocomplete="off" autofocus="" value="<?=@$username?>">
+                                        <input class="form-control" id="input-email" name="username" placeholder="seu usuário" type="text" autocomplete="off" autofocus="">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -46,12 +53,8 @@
                                         <input class="form-control" id="input-senha" name="password" placeholder="sua senha" type="password" autocomplete="off" value="">
                                     </div>
                                 </div>
-                                <div class="col-md-12 txt-center" align="center">
+                                <div class="col-md-12 txt-center">
                                     <button type="submit" class="btn btn-lg btn-login">Acessar</button>
-                                </div>
-                                <div class="col-md-12 txt-center" align="center">
-                                    <br>
-                                    <p style="color: red"><?=@$message?></p>
                                 </div>
                             </fieldset>
                         </form>
@@ -59,14 +62,27 @@
                 </div>
             </div><!-- /.col-->
 
+
     </div> <!-- /container -->
 
 
     <!-- Bootstrap core JavaScript -->
 
-    <script src="<?=base_url('assets/jquery/jquery-3.2.1.min.js')?>"></script>
-    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js')?>"></script>
-    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap-datepicker.js')?>"></script>
+    <script src="<?=base_url('assets/jquery/jquery-3.2.1.min.js');?>"></script>
+    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js');?>"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#modal-success").hide();
+        $("#modal-danger").hide();
+        
+        <?php
+        if(@$message != ""){
+            echo '$("#modal-danger").html(\''.$message.'\');';
+            echo '$("#modal-danger").show();';
+        }
+        ?>
+      });
+    </script>
 
 
   </body>

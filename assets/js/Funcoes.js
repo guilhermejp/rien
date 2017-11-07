@@ -81,3 +81,21 @@ $.fn.datepicker.defaults.format = "dd/mm/yyyy";
 $( function() {
     $( "#datepicker" ).datepicker();
 } );
+
+$( function modal_success(message, bool){
+    if(bool){
+        $("#modal-success").html("");
+        $("#modal-success").html(message);
+        $("#modal-success").alert();
+        $("#modal-success").fadeTo(2000, 500).slideUp(500, function(){
+            $("#modal-success").slideUp(500);
+        });
+    }else{
+        $("#modal-danger").html("");
+        $("#modal-danger").html(message);
+        $("#modal-danger").alert();
+        $("#modal-danger").fadeTo(2000, 500).slideUp(500, function(){
+            $("#modal-danger").slideUp(500);
+        });
+    }
+});

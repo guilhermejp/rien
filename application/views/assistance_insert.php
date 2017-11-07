@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -13,16 +12,23 @@
     <title>Rien</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap.min.css')?>" rel="stylesheet">
-    <link href="<?=base_url('assets/bootstrap/3.3.7/css/datepicker3.css')?>" rel="stylesheet">
+    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap.min.css');?>" rel="stylesheet">
+    <link href="<?=base_url('assets/bootstrap/3.3.7/css/datepicker3.css');?>" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="<?=base_url('assets/main.css?ver=1.1')?>" rel="stylesheet">
+    <link href="<?=base_url('assets/main.css?ver=1.2');?>" rel="stylesheet">
 
   </head>
 
   <body class="main">
 
+    <!-- Alerts -->
+    <div class="panel-alert alert alert-success text-center alert-dismissable fade in" id="modal-success">
+    </div>
+    <div class="panel-alert alert alert-danger text-center alert-dismissable fade in" id="modal-danger">
+    </div>
+    <?=validation_errors()?>
+    <?=@$message?>
     <nav class="navbar main-navbar navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -32,12 +38,19 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="<?=base_url('user/logout')?>">Sair do sistema</a></li>
+            <li><a class="btn btn-rien" href="<?=base_url('user/login')?>">Sair do sistema</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
-
+    <section class="page-title">
+      <div class="container clearfix">
+        <h1>Área Interna Rien</h1>
+        <nav class="bread-crumbs">
+          <a href="<?=base_url('assistance/dash')?>" rel="v:url" property="v:title">Voltar para atendimentos</a> » <span class="current">Cadastro de atendimento</span>
+        </nav><!-- .breadcrumbs -->
+      </div>
+    </section>
     <div class="container">
       
       <div class="panel panel-default">
@@ -46,27 +59,38 @@
           
             <div class="panel-heading"><h3>Cadastro de atendimento</h3></div>
             <div class="panel-body">
+              
+              <div class="col-md-12 pn">
+
+                <div class="col-md-2">
+                 <div class="form-group">
+                    <label for="data">#ID</label>
+                    <input type="text" id="id" name="id" value="<?=@$id;?>" readonly="readonly" class="form-control input-xlarge focused validaFormato validaNumero">
+                  </div>  
+                </div>
+
+              </div>
 
               <div class="col-md-12 pn">
 
                 <div class="col-md-5">
                  <div class="form-group">
                     <label for="data">Data</label>
-                    <input type="text" data-provide="datepicker" name="data" class="form-control input-xlarge focused data-mask">
+                    <input type="text" readonly="readonly" class="form-control input-xlarge focused" value="<?=date('d/m/Y')?>">
                   </div>  
                 </div>
 
                 <div class="col-md-5">
                  <div class="form-group">
                     <label for="hospital">Hospital</label>
-                    <input type="text" name="hospital" class="form-control input-xlarge focused">
+                    <input type="text" name="hospital" value="<?=set_value('hospital');?>" id="hospital" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
                 <div class="col-md-2">
                   <div class="form-group">
                     <label for="num">Nº</label>
-                    <input type="text" name="num" class="form-control input-xlarge focused">
+                    <input type="text" name="nm" value="<?=set_value('nm');?>" class="form-control input-xlarge focused">
                   </div>
                 </div>
 
@@ -77,21 +101,21 @@
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="paciente">Paciente</label>
-                    <input type="text" name="paciente" class="form-control input-xlarge focused">
+                    <input type="text" name="patient" value="<?=set_value('patient');?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>              
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="leito">Leito</label>
-                    <input type="text" name="leito" class="form-control input-xlarge focused">
+                    <input type="text" name="bed" value="<?=set_value('bed');?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="tecnico">Técnico</label>
-                    <input type="text" name="tecnico" class="form-control input-xlarge focused">
+                    <input type="text" name="technician" value="<?=set_value('technician');?>" id="technician" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
@@ -102,22 +126,21 @@
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="destino">Destino</label>
-                    <input type="text" name="destino" class="form-control input-xlarge focused data-mask">
+                    <input type="text" name="destination" value="<?=set_value('destination');?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>              
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="input-fim">SUS/AV/ALT/CONS</label>
-                    <input type="text" name="sus-av-alt-cons" class="form-control input-xlarge focused">
+                    <input type="text" name="sus" value="<?=set_value('sus');?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="proc">Proc.</label>
-                    <select class="form-control">
-                      <option></option>
+                    <select class="form-control" name="proc">
                     </select>
                   </div>  
                 </div>
@@ -129,21 +152,21 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="tempo">Tempo</label>
-                  <input type="text" name="tempo" maxlength="5" class="form-control input-xlarge focused  validaNumero validaFormato hora-mask">
+                  <input type="text" name="time" value="<?=set_value('time');?>" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
                 </div>
                </div>
 
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="inicio">Início</label>
-                  <input id="inicio" type="text" name="inicio" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
+                  <input id="inicio" type="text" name="start" value="<?=set_value('start');?>" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
                 </div>
                </div>
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="fim">Fim</label>
-                    <input type="text" name="fim" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
+                    <input type="text" name="end" value="<?=set_value('end');?>" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
                   </div>  
                 </div>
 
@@ -154,7 +177,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="input-perc-concluido">Acesso</label>
-                    <select class="form-control">
+                    <select class="form-control" name="access">
                     <option></option>
                   </select>
                 </div>
@@ -163,7 +186,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="input-perc-hoje">Sitio</label>
-                    <select class="form-control">
+                    <select class="form-control" name="site">
                     <option></option>
                   </select>                
                 </div>
@@ -173,8 +196,8 @@
                <div class="form-group">
                   <label>Precaução</label>
                   <div class="radio">
-                    <label class="radio-inline"><input type="radio" name="sim">Sim</label>
-                    <label class="radio-inline"><input type="radio" name="nao">Não</label>
+                    <label class="radio-inline"><input type="radio" name="precaution" value="1">Sim</label>
+                    <label class="radio-inline"><input type="radio" name="precaution" value="0">Não</label>
                   </div>
                 </div>
                </div>
@@ -186,21 +209,21 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="maq">Maq.</label>
-                  <input type="text" value="" name="maq" class="form-control input-xlarge focused">
+                  <input type="text" value="" name="maq" value="<?=set_value('maq');?>" class="form-control input-xlarge focused">
                 </div>
                </div>
 
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="or">OR</label>
-                  <input type="text" value="" name="or" class="form-control input-xlarge focused ">
+                  <input type="text" value="" name="or" value="<?=set_value('or');?>" class="form-control input-xlarge focused ">
                 </div>
                </div>
 
                 <div class="col-md-6">
                  <div class="form-group">
                     <label for="medico">Médico</label>
-                    <input type="text" name="medico" class="form-control input-xlarge focused">
+                    <input type="text" id="medico" name="doctor" value="<?=set_value('doctor');?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
@@ -211,24 +234,23 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="convenio">Convênio</label>
-                  <input type="text" name="convenio" class="form-control input-xlarge focused">
+                  <input type="text" name="agreement" value="<?=set_value('agreement');?>" id="agreement" class="form-control input-xlarge focused">
                 </div>
                </div>
 
               <div class="col-md-8">
                 <div class="form-group">
                   <label for="observacao">Observação</label>
-                  <input type="text" name="observacao" class="form-control input-xlarge focused">
+                  <input type="text" name="note" value="<?=set_value('note');?>" class="form-control input-xlarge focused">
                 </div>
                </div>
-
 
               </div>
 
               <div class="col-md-12 pn">
                 <div class="col-md-4">
-                    <button type="submit" class="btn btn-lg btn-primary">Salvar atendimento</button>
-                    <a class="btn btn-lg btn-cancelar" href="index.html">Cancelar</a>
+                    <button type="submit" class="btn btn-lg btn-rien">Salvar atendimento</button>
+                    <a class="btn btn-lg btn-cancel" href="<?=base_url('assistance/dash')?>">Cancelar</a>
                 </div>
               </div>
             </div>
@@ -240,18 +262,40 @@
 
     </div><!-- /.container -->
 
-
     <!-- Bootstrap core JavaScript -->
 
-    <script src="<?=base_url('assets/jquery/jquery-3.2.1.min.js')?>"></script>
-    <script src="<?=base_url('assets/jquery/jquery.maskedinput.min.js')?>"></script>
-    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js')?>"></script>
-    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap-datepicker.js')?>"></script>
-    <script src="<?=base_url('assets/js/Mascaras.js')?>"></script>
-    <script src="<?=base_url('assets/js/Funcoes.js?ver=2')?>"></script>
+    <script src="<?=base_url('assets/jquery/jquery-3.2.1.min.js');?>"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="<?=base_url('assets/jquery/jquery.maskedinput.min.js');?>"></script>
+    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js');?>"></script>
+    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap-datepicker.js');?>"></script>
+    <script src="<?=base_url('assets/js/Mascaras.js');?>"></script>
+    <script src="<?=base_url('assets/js/Funcoes.js?ver=2');?>"></script>
 
     <script type="text/javascript">
+      $(document).ready(function() {
+        $("#modal-success").hide();
+        $("#modal-danger").hide();
 
+        var hospitals = [ <?=$hospitals?> ];
+        $( "#hospital" ).autocomplete({source: hospitals});
+        
+        var doctors = [ <?=$doctors?> ];
+        $( "#doctor" ).autocomplete({source: doctors});
+        
+        var technicians = [ <?=$technicians?> ];
+        $( "#technician" ).autocomplete({source: technicians});
+        
+        var agreements = [ <?=$agreements?> ];
+        $( "#agreement" ).autocomplete({source: agreements});
+      });
+
+      //ALERT SUCCESS
+      //modal_success(result.message, true);
+      
+      //modal_success(result.message, false);
+      
     </script>
 
   </body>

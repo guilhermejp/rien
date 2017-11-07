@@ -13,20 +13,26 @@
     <title>Rien</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap.min.css')?>" rel="stylesheet">
-    <link href="<?=base_url('assets/bootstrap/3.3.7/css/datepicker3.css')?>" rel="stylesheet">
-    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap-table.css')?>" rel="stylesheet">
+    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap.min.css');?>" rel="stylesheet">
+    <link href="<?=base_url('assets/bootstrap/3.3.7/css/datepicker3.css');?>" rel="stylesheet">
+    <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap-table.css');?>" rel="stylesheet">
 
     <!-- DataTables -->
-    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/DataTable/datatables.css')?>">
-    <link href="<?=base_url('assets/DataTable/DataTables-1.10.16/css/dataTables.bootstrap.min.css')?>" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/datatable/datatables-1.10.16/css/dataTables.bootstrap.min.css');?>"/>
+    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/datatable/buttons-1.4.2/css/buttons.bootstrap.min.css');?>"/>
 
     <!-- Custom styles for this template -->
-    <link href="<?=base_url('assets/main.css?ver=1.7')?>" rel="stylesheet">
+    <link href="<?=base_url('assets/main.css?ver=1.8');?>" rel="stylesheet">
 
   </head>
 
   <body class="main">
+
+    <!-- Alerts -->
+    <div class="panel-alert alert alert-success text-center alert-dismissable fade in" id="modal-success">
+    </div>
+    <div class="panel-alert alert alert-danger text-center alert-dismissable fade in" id="modal-danger">
+    </div>
 
     <nav class="navbar main-navbar navbar-fixed-top">
       <div class="container">
@@ -37,23 +43,44 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logout">Sair do sistema</a></li>
+            <li><a class="btn btn-rien" href="<?=base_url('user/login')?>">Sair do sistema</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+    <section class="page-title">
+      <div class="container clearfix">
+        <h1>Área Interna Rien</h1>
+        <nav class="bread-crumbs">
+          <span class="current">Atendimentos</span>
+        </nav><!-- .breadcrumbs -->
+      </div>
+    </section>
 
     <div class="container">
       
       <div class="panel panel-default">
 
-        <form role="form" class="form-horizontal" method="post" action="<?=base_url('ajax_list')?>">
+        <form role="form" class="form-horizontal" method="post" action="">
           
             <div class="panel-heading"><h3>Atendimentos</h3></div>
             <div class="panel-body">
               <div class="col-md-12 pn">
                 <div class="col-md-3">
-                  <a href="<?=base_url('assistance/')?>" class="btn btn-lg btn-success">Cadastrar atendimento</a>
+                  <a href="<?=base_url('assistance')?>" class="btn btn-lg btn-rien">Cadastrar atendimento</a>
+                </div>
+                <div class="col-md-7">
+                  <div class="col-md-5">
+                      <input type="text" data-provide="datepicker" maxlength="10" placeholder="Data de início" name="data_inicio" id="buscar" class="form-control search validaNumero data-mask">
+                  </div>
+                  <div class="col-md-5">
+                      <input type="text" data-provide="datepicker" maxlength="10" placeholder="Data de fim" name="data_fim" id="buscar" class="form-control search validaNumero data-mask">
+                  </div>
+                  <div class="col-md-1">
+                    <div class="col-md-1">
+                        <button class="btn-icon btn-pesquisar" style="height:42px"></button>
+                    </div>
+                </div>
                 </div>
               </div>
             </div>
@@ -62,12 +89,13 @@
               <div class="col-md-12 pn">
                 <div class="fixed-table-container">
                   <div class="fixed-table-body">
-                  <table id="example" class="display" cellspacing="0" width="100%">
+                  <table id="atendimento" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th><div class="th-inner">#</div></th>
                             <th><div class="th-inner">Data</div></th>
                             <th><div class="th-inner">Hospital</div></th>
-                            <th><div class="th-inner">Nº.:</div></th>
+                            <th><div class="th-inner">NºM:</div></th>
                             <th><div class="th-inner">Paciente</div></th>
                             <th><div class="th-inner">Leito</div></th>
                             <th><div class="th-inner">Técnico</div></th>
@@ -82,12 +110,13 @@
                             <th><div class="th-inner">Preparação</div></th>
                             <th><div class="th-inner">Máq.</div></th>
                             <th><div class="th-inner">OR</div></th>
+                            <th><div class="th-inner">Home Choice</div></th>
                             <th><div class="th-inner">Médico</div></th>
                             <th><div class="th-inner">Convênio</div></th>
                             <th><div class="th-inner">Observação</div></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <!--<tbody>
                         <tr class="table-row-content">
                             <td><div class="ellipsis item-ellipsis-large">Tiger Nixon</div></td>
                             <td><div class="ellipsis item-ellipsis-large">Tiger Nixon</div></td>
@@ -110,7 +139,7 @@
                             <td><div class="ellipsis item-ellipsis-large">Tiger Nixon</div></td>
                             <td><div class="ellipsis item-ellipsis-large">Tiger Nixon</div></td>
                         </tr>
-                    </tbody>
+                    </tbody>-->
                   </table>
                   </div>
                 </div>
@@ -118,26 +147,38 @@
               </div>
             </div>
 
+
         </form>
       </div>
-        
+
+
     </div><!-- /.container -->
 
 
     <!-- Bootstrap core JavaScript -->
 
-    <script src="<?=base_url('assets/jquery/jquery-3.2.1.min.js')?>"></script>
-    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js')?>"></script>
-    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap-datepicker.js')?>"></script> 
-    <script src="<?=base_url('assets/DataTable/datatables.js')?>"></script>
-    <script src="<?=base_url('assets/DataTable/DataTables-1.10.16/js/jquery.dataTables.min.js')?>"></script>
-    <script src="<?=base_url('assets/DataTable/DataTables-1.10.16/js/dataTables.bootstrap.min.js')?>"></script>
+    <script src="<?=base_url('assets/jquery/jquery-3.2.1.min.js');?>"></script>
+    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js');?>"></script>
+    <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap-datepicker.js');?>"></script> 
+
+ 
+    <script type="text/javascript" src="<?=base_url('assets/datatable/datatables-1.10.16/js/jquery.dataTables.min.js');?>"></script>
+    <script type="text/javascript');?>" src="<?=base_url('assets/datatable/datatables-1.10.16/js/dataTables.bootstrap.min.js');?>"></script>
+    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/dataTables.buttons.min.js');?>"></script>
+    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/buttons.bootstrap.min.js');?>"></script>
+    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/buttons.flash.min.js');?>"></script>
+    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/buttons.html5.min.js');?>"></script>
 
     <!-- Custom page scripts -->
+    <script src="<?=base_url('assets/js/Mascaras.js')?>"></script>
+    <script src="<?=base_url('assets/js/Funcoes.js?ver=2')?>"></script>
 
     <script type="text/javascript">
       $(document).ready(function() {
-          $('#example').DataTable( {
+        $("#modal-success").hide();
+        $("#modal-danger").hide();
+
+          $('#atendimento').DataTable( {
               "language": {
                   "sEmptyTable": "Nenhum registro encontrado",
                   "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -163,10 +204,20 @@
                 },
               dom: 'Bfrtip',
               buttons: [
-                  'excel', 'pdf', 'print'
-              ]
+                  'excel', 'pdf'
+              ],
+              "scrollX": true,
+              "processing": true,
+              "serverSide": true,
+              "ajax": "<?=base_url('assistance/ajax_list')?>"
           } );
+          
+          $('#atendimento tbody').on( 'dblclick', 'tr', function () {
+                document.location.href = "<?=base_url('assistance/update')?>"+"/"+$(this).children('td:first-child').text();
+            } );
+
       });
     </script>
+
   </body>
 </html>
