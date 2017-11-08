@@ -78,7 +78,7 @@
                   </div>
                   <div class="col-md-1">
                     <div class="col-md-1">
-                        <button class="btn-icon btn-pesquisar" id="pesquisar" style="height:42px"></button>
+                        <button class="btn-icon btn-pesquisar" id="pesquisar" onclick="javascript: return false;" style="height:42px"></button>
                     </div>
                 </div>
                 </div>
@@ -219,6 +219,7 @@
               var data_fim = $('#data_fim').val().split("/").reverse().join("");
               var url_chamada = "<?=base_url('view_assistance/ajax_list')?>"+"/"+data_ini+"/"+data_fim;
               table.ajax.url( url_chamada ).load();
+              return false;
            });
     
 

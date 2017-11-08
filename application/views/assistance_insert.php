@@ -77,7 +77,7 @@
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="data">Data</label>
-                    <input type="text" name="date" readonly="readonly" class="form-control input-xlarge focused" value="<?=$date!=""?$date:date('d/m/Y');?>">
+                    <input type="text" name="date" readonly="readonly" class="form-control input-xlarge focused" value="<?=@$date!=""?$date:date('d/m/Y');?>">
                   </div>  
                 </div>
 
