@@ -11,6 +11,7 @@ class Assistance extends CI_Controller {
             $this->load->model('Doctor_model');
             $this->load->model('Agreement_model');
             $this->db->cache_off();
+            
         }
         
         public function index($erros=""){
@@ -64,7 +65,7 @@ class Assistance extends CI_Controller {
             }
             
             $assistance = $this->Assistance_model->get($id);
-            
+
             if($assistance->hospital > 0){
                 $hospital = $this->Hospital_model->get($assistance->hospital);
                 $assistance->hospital = $hospital->name;
@@ -85,6 +86,7 @@ class Assistance extends CI_Controller {
                 $assistance->agreement = $agreement->name;
             }
             
+            $assistance->date = date('d/m/Y',strtotime($assistance->date));
             
             $this->index(json_decode(json_encode($assistance),true));
         }
@@ -94,71 +96,6 @@ class Assistance extends CI_Controller {
 
             $this->load->view('assistance_list');
         }
-        
-        // Function for update datatable via AJAX
-        public function ajax_list($period_start=false, $period_end=false){
-            if(!$this->session->userdata('username')){ redirect('user/login'); return false; }
-            
-                if($period_start != false){
-                   $p_start = DateTime::createFromFormat('d/m/Y', $period_start)->format('Y-m-d');
-                }else{
-                    $p_start = false;
-                }
-
-                if($period_end != false){
-                    $p_end = DateTime::createFromFormat('d/m/Y', $period_end)->format('Y-m-d'); 
-                }else{
-                    $p_end = false;
-                }
-
-		$list = $this->Assistance_model->get_datatables($this->input->post('start'), $this->input->post('lenght'), $this->input->post('search_value'), $this->input->post('order'), $p_start, $p_end);
-		$data = array();
-		$no = @$this->input->post('start');
-		foreach ($list as $assistance) {
-			$no++;
-			$row = array();
-			$row[] = $assistance->id;
-                        $row[] = date('d/m/Y',strtotime($assistance->date));
-                            $hospital = $this->Hospital_model->get($assistance->hospital);
-                            $row[] = is_object($hospital) ? $hospital->name : "";
-                        $row[] = $assistance->nm;
-                        $row[] = $assistance->patient;
-                        $row[] = $assistance->bed;
-                            $technician = $this->Technician_model->get($assistance->technician);
-                            $row[] = is_object($technician) ? $technician->name : "";
-                        $row[] = $assistance->destination;
-                        $row[] = $assistance->sus;
-                        $row[] = $assistance->proc;
-                        $row[] = $assistance->time;
-                        $row[] = $assistance->start;
-                        $row[] = $assistance->end;
-                        $row[] = $assistance->access;
-                        $row[] = $assistance->site;
-                        $row[] = $assistance->precaution;
-                        $row[] = $assistance->maq;
-                        $row[] = $assistance->or;
-                        $row[] = $assistance->home_choice;
-                            $doctor = $this->Doctor_model->get($assistance->doctor);
-                            $row[] = is_object($doctor) ? $doctor->name : "";
-                            $agreement = $this->Agreement_model->get($assistance->agreement);
-                            $row[] = is_object($agreement) ? $agreement->name : "";
-                        $row[] = $assistance->note;
-			$data[] = $row;
-		}
-
-                $output = array(
-                            "draw" => @$this->input->post('draw'),
-                            "recordsTotal" => $this->Assistance_model->count_all(),
-                            "recordsFiltered" => $this->Assistance_model->count_filtered($this->input->post('search_value'), $this->input->post('order')),
-                            "data" => $data,
-                        );
-                
-		//output to json format
-		echo json_encode($output);
-                return true;
-
-	}
-        
         
         public function save(){
             if(!$this->session->userdata('username')){ redirect('user/login'); return false; }
@@ -186,18 +123,20 @@ class Assistance extends CI_Controller {
                                     'errors' => array('required' => 'Médico deve ser preenchido'))
                 );
 
+            $input = $this->input->post();
             $this->form_validation->set_rules($config);
+            $this->form_validation->set_error_delimiters('<p>', '</p>');
 
             if ($this->form_validation->run() == FALSE){
                 $erros = array('messages' => validation_errors());
+                $erros = array_merge($erros, $input);
                 $this->index($erros);
                 return false;
             }
-
-            $input = $this->input->post();
             
+            $encoding = mb_internal_encoding();
             //Search if exists Hospital in autocomplete
-            $hospital_name = strtoupper(trim($input['hospital']));
+            $hospital_name = mb_strtoupper(trim($input['hospital']), $encoding);
             $hospital_search = $this->Hospital_model->where('name LIKE',$hospital_name)->get();
 
                 // Hospital autocomplete detected
@@ -209,7 +148,7 @@ class Assistance extends CI_Controller {
             }
 
             //Search if exists Technician in autocomplete
-            $technician_name = strtoupper(trim($input['technician']));
+            $technician_name = mb_strtoupper(trim($input['technician']), $encoding);
             $technician_search = $this->Technician_model->where('name LIKE',$technician_name)->get();
 
                 // Technician autocomplete detected
@@ -221,7 +160,7 @@ class Assistance extends CI_Controller {
             }
 
             //Search if exists Doctor in autocomplete
-            $doctor_name = strtoupper(trim($input['doctor']));
+            $doctor_name = mb_strtoupper(trim($input['doctor']), $encoding);
             $doctor_search = $this->Doctor_model->where('name LIKE',$doctor_name)->get();
 
                 // Doctor autocomplete detected
@@ -233,7 +172,7 @@ class Assistance extends CI_Controller {
             }
 
             //Search if exists Doctor in autocomplete
-            $agreement_name = strtoupper(trim($input['agreement']));
+            $agreement_name = mb_strtoupper(trim($input['agreement']), $encoding);
             $agreement_search = $this->Agreement_model->where('name LIKE',$agreement_name)->get();
 
                 // Agreement autocomplete detected

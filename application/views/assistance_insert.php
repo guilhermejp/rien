@@ -20,16 +20,17 @@
 
   </head>
 
-  <body class="main">
+  <body>
 
-    <!-- Alerts -->
-    <div class="panel-alert alert alert-success text-center alert-dismissable fade in" id="modal-success">
-    </div>
-    <div class="panel-alert alert alert-danger text-center alert-dismissable fade in" id="modal-danger">
-    </div>
-    <?=validation_errors()?>
-    <?=@$message?>
-    <nav class="navbar main-navbar navbar-fixed-top">
+  <!-- Alerts -->
+  <div class="panel-alert alert alert-success text-center alert-dismissable" id="modal-success">
+  </div>
+  <div class="panel-alert alert alert-danger text-center alert-dismissable" id="modal-danger">
+      <?=@validation_errors();?>
+  </div>
+
+  <div class="main">
+    <nav class="navbar main-navbar">
       <div class="container">
         <div class="navbar-header">
           <div class="logo">
@@ -73,24 +74,24 @@
 
               <div class="col-md-12 pn">
 
-                <div class="col-md-5">
+                <div class="col-md-4">
                  <div class="form-group">
                     <label for="data">Data</label>
-                    <input type="text" readonly="readonly" class="form-control input-xlarge focused" value="<?=date('d/m/Y')?>">
+                    <input type="text" name="date" readonly="readonly" class="form-control input-xlarge focused" value="<?=$date!=""?$date:date('d/m/Y');?>">
                   </div>  
                 </div>
 
-                <div class="col-md-5">
+                <div class="col-md-4">
                  <div class="form-group">
                     <label for="hospital">Hospital</label>
-                    <input type="text" name="hospital" value="<?=set_value('hospital');?>" id="hospital" class="form-control input-xlarge focused">
+                    <input type="text" name="hospital" value="<?=@$hospital;?>" id="hospital" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label for="num">Nº</label>
-                    <input type="text" name="nm" value="<?=set_value('nm');?>" class="form-control input-xlarge focused">
+                    <label for="num">NºM</label>
+                    <input type="text" name="nm" value="<?=@$nm;?>" class="form-control input-xlarge focused">
                   </div>
                 </div>
 
@@ -101,21 +102,21 @@
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="paciente">Paciente</label>
-                    <input type="text" name="patient" value="<?=set_value('patient');?>" class="form-control input-xlarge focused">
+                    <input type="text" name="patient" value="<?=@$patient;?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>              
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="leito">Leito</label>
-                    <input type="text" name="bed" value="<?=set_value('bed');?>" class="form-control input-xlarge focused">
+                    <input type="text" name="bed" value="<?=@$bed;?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="tecnico">Técnico</label>
-                    <input type="text" name="technician" value="<?=set_value('technician');?>" id="technician" class="form-control input-xlarge focused">
+                    <input type="text" name="technician" value="<?=@$technician;?>" id="technician" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
@@ -126,14 +127,14 @@
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="destino">Destino</label>
-                    <input type="text" name="destination" value="<?=set_value('destination');?>" class="form-control input-xlarge focused">
+                    <input type="text" name="destination" value="<?=@$destination;?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>              
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="input-fim">SUS/AV/ALT/CONS</label>
-                    <input type="text" name="sus" value="<?=set_value('sus');?>" class="form-control input-xlarge focused">
+                    <input type="text" name="sus" value="<?=@$sus;?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
@@ -152,21 +153,21 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="tempo">Tempo</label>
-                  <input type="text" name="time" value="<?=set_value('time');?>" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
+                  <input type="text" name="time" value="<?=@$time;?>" maxlength="5" class="form-control input-xlarge focused validaNumero hora-mask">
                 </div>
                </div>
 
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="inicio">Início</label>
-                  <input id="inicio" type="text" name="start" value="<?=set_value('start');?>" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
+                  <input id="inicio" type="text" name="start" value="<?=@$start;?>" maxlength="5" class="form-control input-xlarge focused validaNumero hora-mask">
                 </div>
                </div>
 
                 <div class="col-md-4">
                  <div class="form-group">
                     <label for="fim">Fim</label>
-                    <input type="text" name="end" value="<?=set_value('end');?>" maxlength="5" class="form-control input-xlarge focused validaNumero validaFormato hora-mask">
+                    <input type="text" name="end" value="<?=@$end;?>" maxlength="5" class="form-control input-xlarge focused validaNumero hora-mask">
                   </div>  
                 </div>
 
@@ -209,21 +210,28 @@
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="maq">Maq.</label>
-                  <input type="text" value="" name="maq" value="<?=set_value('maq');?>" class="form-control input-xlarge focused">
+                  <input type="text" value="" name="maq" value="<?=@$maq;?>" class="form-control input-xlarge focused">
                 </div>
                </div>
 
               <div class="col-md-3">
                 <div class="form-group">
                   <label for="or">OR</label>
-                  <input type="text" value="" name="or" value="<?=set_value('or');?>" class="form-control input-xlarge focused ">
+                  <input type="text" value="" name="or" value="<?=@$or;?>" class="form-control input-xlarge focused ">
                 </div>
                </div>
 
-                <div class="col-md-6">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="home-choice">HOME CHOICE</label>
+                  <input type="text" value="" name="home-choice" value="<?=@$home_choice;?>" class="form-control input-xlarge focused ">
+                </div>
+               </div>
+
+                <div class="col-md-3">
                  <div class="form-group">
                     <label for="medico">Médico</label>
-                    <input type="text" id="medico" name="doctor" value="<?=set_value('doctor');?>" class="form-control input-xlarge focused">
+                    <input type="text" id="medico" name="doctor" value="<?=@$doctor;?>" class="form-control input-xlarge focused">
                   </div>  
                 </div>
 
@@ -234,14 +242,14 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="convenio">Convênio</label>
-                  <input type="text" name="agreement" value="<?=set_value('agreement');?>" id="agreement" class="form-control input-xlarge focused">
+                  <input type="text" name="agreement" value="<?=@$agreement;?>" id="agreement" class="form-control input-xlarge focused">
                 </div>
                </div>
 
               <div class="col-md-8">
                 <div class="form-group">
                   <label for="observacao">Observação</label>
-                  <input type="text" name="note" value="<?=set_value('note');?>" class="form-control input-xlarge focused">
+                  <input type="text" name="note" value="<?=@$note;?>" class="form-control input-xlarge focused">
                 </div>
                </div>
 
@@ -258,9 +266,8 @@
 
         </form>
       </div>
-
-
     </div><!-- /.container -->
+    </div><!-- /.main -->
 
     <!-- Bootstrap core JavaScript -->
 
@@ -275,9 +282,14 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $("#modal-success").hide();
-        $("#modal-danger").hide();
-
+        var message = "<?=@$message?>";
+        if(message != ""){
+            modal_alert(message, true);
+        }
+        if($.trim($('#modal-danger').text()) != ""){
+            modal_alert($('#modal-danger').text(), false);
+        }
+        
         var hospitals = [ <?=$hospitals?> ];
         $( "#hospital" ).autocomplete({source: hospitals});
         
@@ -289,12 +301,18 @@
         
         var agreements = [ <?=$agreements?> ];
         $( "#agreement" ).autocomplete({source: agreements});
-      });
 
-      //ALERT SUCCESS
-      //modal_success(result.message, true);
-      
-      //modal_success(result.message, false);
+        /*-------------------------------------------------------*/
+        /* modals                                                */
+        /*-------------------------------------------------------*/
+        $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+            $('#calendar').datepicker({
+        });
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+
+      });
       
     </script>
 

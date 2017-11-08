@@ -20,14 +20,13 @@
 
   </head>
 
-  <body class="main">
+  <body>
 
-    <!-- Alerts -->
-    <div class="panel-alert alert alert-success text-center alert-dismissable fade in" id="modal-success">
-    </div>
-    <div class="panel-alert alert alert-danger text-center alert-dismissable fade in" id="modal-danger">
-    </div>
+  <!-- Alerts -->
+  <div class="panel-alert alert alert-danger text-center alert-dismissable" id="modal-danger">
+  </div>
 
+  <div class="main">
     <div class="container">
 
             <div class="panel-login form-signin">
@@ -62,25 +61,21 @@
                 </div>
             </div><!-- /.col-->
 
-
     </div> <!-- /container -->
+    </div> <!-- /main -->
 
 
     <!-- Bootstrap core JavaScript -->
 
     <script src="<?=base_url('assets/jquery/jquery-3.2.1.min.js');?>"></script>
     <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js');?>"></script>
+    <script src="<?=base_url('assets/js/Funcoes.js?ver=4');?>"></script>
     <script type="text/javascript">
       $(document).ready(function() {
-        $("#modal-success").hide();
-        $("#modal-danger").hide();
-        
-        <?php
-        if(@$message != ""){
-            echo '$("#modal-danger").html(\''.$message.'\');';
-            echo '$("#modal-danger").show();';
+        var message = "<?=$message?>";
+        if(message != ""){
+            modal_alert(message, false);
         }
-        ?>
       });
     </script>
 

@@ -4,12 +4,19 @@
 .btn, button, input, .panel, select{
 	border-radius: 0!important;
 }
-
 body{
 	font-family: 'Times new roman', serif;
 }
 a, button{
 	color: #fff;
+}
+.is-visible{
+    opacity: 1!important;
+    display: block!important;
+}
+.main{
+    -webkit-transition: all .5s linear;
+    transition: all .5s linear;
 }
 .pn{
 	padding: 0!important;
@@ -28,13 +35,13 @@ a, button{
 	background-color: #fff;
 	border-bottom: 1px solid #E5E5E5;
 }
+.navbar{
+    margin-bottom: 0;
+}
 .logo{
 	padding: 3px;
 	height: auto;
 	min-height: 82px;
-}
-.main{
-	margin-top: 82px;
 }
 .page-title, .toggle_sidebar .switcher:after {
     border-top-color: #f8b661;
@@ -80,7 +87,8 @@ a, button{
     margin: 0 auto;
 }
 .form-control {
-	padding: 21px 16px !important;
+    height: 44px;
+	padding: 10px 16px !important;
 	border-color: #E4E4E4;
 }
 .form-control:focus {
@@ -153,16 +161,17 @@ a.btn:hover, button:hover {
 	padding-left: 10px;
 }
 .panel-alert{
-    width: 300px;
-    margin: 30px auto;
-    position: fixed;
+    display: none;
+    opacity: 0;
+    width: 900px;
+    margin: 5px auto;
+    position: relative;
     z-index: 1050;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    display: block;
-    height: 100px
+    height: 50px
 }
 
 /*Tables*/

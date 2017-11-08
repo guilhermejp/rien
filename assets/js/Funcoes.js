@@ -72,24 +72,16 @@ $('.validaFormatoTel').on('keypress', function(event) {
     return (mascara( this, mtel ));
 });
 /*-------------------------------------------------------*/
-/* datepicker                                            */
+/* modals                                                */
 /*-------------------------------------------------------*/
-$.fn.datepicker.defaults.format = "dd/mm/yyyy";
-    $('#calendar').datepicker({
-});
-
-$( function() {
-    $( "#datepicker" ).datepicker();
-} );
-
-$( function modal_success(message, bool){
+function modal_alert(message, bool){
     if(bool){
         $("#modal-success").html("");
         $("#modal-success").html(message);
         $("#modal-success").alert();
-        $("#modal-success").fadeTo(2000, 500).slideUp(500, function(){
-            $("#modal-success").slideUp(500);
-        });
+            $("#modal-success").fadeTo(2000, 500).slideUp(500, function(){
+                $("#modal-success").slideUp(500);
+            });
     }else{
         $("#modal-danger").html("");
         $("#modal-danger").html(message);
@@ -98,4 +90,4 @@ $( function modal_success(message, bool){
             $("#modal-danger").slideUp(500);
         });
     }
-});
+}

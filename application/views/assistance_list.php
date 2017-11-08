@@ -18,23 +18,23 @@
     <link href="<?=base_url('assets/bootstrap/3.3.7/css/bootstrap-table.css');?>" rel="stylesheet">
 
     <!-- DataTables -->
-    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/datatable/datatables-1.10.16/css/dataTables.bootstrap.min.css');?>"/>
-    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/datatable/buttons-1.4.2/css/buttons.bootstrap.min.css');?>"/>
+    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/datatable/datatables.min.css');?>"/>
 
     <!-- Custom styles for this template -->
     <link href="<?=base_url('assets/main.css?ver=1.8');?>" rel="stylesheet">
 
   </head>
 
-  <body class="main">
+  <body>
 
-    <!-- Alerts -->
-    <div class="panel-alert alert alert-success text-center alert-dismissable fade in" id="modal-success">
-    </div>
-    <div class="panel-alert alert alert-danger text-center alert-dismissable fade in" id="modal-danger">
-    </div>
+  <!-- Alerts -->
+  <div class="panel-alert alert alert-success text-center alert-dismissable" id="modal-success">
+  </div>
+  <div class="panel-alert alert alert-danger text-center alert-dismissable" id="modal-danger">
+  </div>
 
-    <nav class="navbar main-navbar navbar-fixed-top">
+  <div class="main">
+    <nav class="navbar main-navbar">
       <div class="container">
         <div class="navbar-header">
           <div class="logo">
@@ -71,14 +71,14 @@
                 </div>
                 <div class="col-md-7">
                   <div class="col-md-5">
-                      <input type="text" data-provide="datepicker" maxlength="10" placeholder="Data de início" name="data_inicio" id="buscar" class="form-control search validaNumero data-mask">
+                      <input type="text" data-provide="datepicker" maxlength="10" placeholder="Data de início" name="data_inicio" id="data_inicio" class="form-control search validaNumero data-mask">
                   </div>
                   <div class="col-md-5">
-                      <input type="text" data-provide="datepicker" maxlength="10" placeholder="Data de fim" name="data_fim" id="buscar" class="form-control search validaNumero data-mask">
+                      <input type="text" data-provide="datepicker" maxlength="10" placeholder="Data de fim" name="data_fim" id="data_fim" class="form-control search validaNumero data-mask">
                   </div>
                   <div class="col-md-1">
                     <div class="col-md-1">
-                        <button class="btn-icon btn-pesquisar" style="height:42px"></button>
+                        <button class="btn-icon btn-pesquisar" id="pesquisar" style="height:42px"></button>
                     </div>
                 </div>
                 </div>
@@ -154,6 +154,7 @@
 
     </div><!-- /.container -->
 
+  </div><!-- /.main -->
 
     <!-- Bootstrap core JavaScript -->
 
@@ -161,13 +162,7 @@
     <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap.min.js');?>"></script>
     <script src="<?=base_url('assets/bootstrap/3.3.7/js/bootstrap-datepicker.js');?>"></script> 
 
- 
-    <script type="text/javascript" src="<?=base_url('assets/datatable/datatables-1.10.16/js/jquery.dataTables.min.js');?>"></script>
-    <script type="text/javascript');?>" src="<?=base_url('assets/datatable/datatables-1.10.16/js/dataTables.bootstrap.min.js');?>"></script>
-    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/dataTables.buttons.min.js');?>"></script>
-    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/buttons.bootstrap.min.js');?>"></script>
-    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/buttons.flash.min.js');?>"></script>
-    <script type="text/javascript" src="<?=base_url('assets/datatable/buttons-1.4.2/js/buttons.html5.min.js');?>"></script>
+    <script type="text/javascript" src="<?=base_url('assets/datatable/datatables.min.js');?>"></script>
 
     <!-- Custom page scripts -->
     <script src="<?=base_url('assets/js/Mascaras.js')?>"></script>
@@ -175,10 +170,8 @@
 
     <script type="text/javascript">
       $(document).ready(function() {
-        $("#modal-success").hide();
-        $("#modal-danger").hide();
 
-          $('#atendimento').DataTable( {
+          var table = $('#atendimento').DataTable( {
               "language": {
                   "sEmptyTable": "Nenhum registro encontrado",
                   "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -209,12 +202,25 @@
               "scrollX": true,
               "processing": true,
               "serverSide": true,
-              "ajax": "<?=base_url('assistance/ajax_list')?>"
+               // Load data for the table's content from an Ajax source
+              "ajax": {
+                "url": "<?=base_url('view_assistance/ajax_list')?>",
+                "type": "POST"
+              }
+
           } );
           
           $('#atendimento tbody').on( 'dblclick', 'tr', function () {
                 document.location.href = "<?=base_url('assistance/update')?>"+"/"+$(this).children('td:first-child').text();
             } );
+            
+          $('#data_inicio, #data_fim, #pesquisar').change(function(){
+              var data_ini = $('#data_inicio').val().split("/").reverse().join("");
+              var data_fim = $('#data_fim').val().split("/").reverse().join("");
+              var url_chamada = "<?=base_url('view_assistance/ajax_list')?>"+"/"+data_ini+"/"+data_fim;
+              table.ajax.url( url_chamada ).load();
+           });
+    
 
       });
     </script>
