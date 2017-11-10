@@ -4,13 +4,13 @@ class View_assistance_model extends MY_Model{
 	public $table = 'view_assistance'; // you MUST mention the table name
 	public $primary_key = 'id'; // you MUST mention the primary key
         public $column_search = array('id','date','hospital','nm','patient',
-            'bed','technician','destination','sus','proc','time','start',
+            'bed','technician','technician2','technician3','destination','sus','proc','time','start',
             'end','access','site','precaution','maq','or','home_choice',
-            'doctor','agreement','note');
+            'doctor','agreement','note','situation');
         public $column_order = array('id','date','hospital','nm','patient',
-            'bed','technician','destination','sus','proc','time','start',
+            'bed','technician','technician2','technician3','destination','sus','proc','time','start',
             'end','access','site','precaution','maq','or','home_choice',
-            'doctor','agreement','note');
+            'doctor','agreement','note','situation');
 	public $fillable = array(); // If you want, you can set an array with the fields that can be filled by insert/update
 	public $protected = array(); // ...Or you can set an array with the fields that cannot be filled by insert/update
 	public function __construct(){

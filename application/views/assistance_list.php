@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="<?=base_url('assets/datatable/datatables.min.css');?>"/>
 
     <!-- Custom styles for this template -->
-    <link href="<?=base_url('assets/main.css?ver=1.8');?>" rel="stylesheet">
+    <link href="<?=base_url('assets/main.css?ver=2');?>" rel="stylesheet">
 
   </head>
 
@@ -95,25 +95,28 @@
                             <th><div class="th-inner">#</div></th>
                             <th><div class="th-inner">Data</div></th>
                             <th><div class="th-inner">Hospital</div></th>
-                            <th><div class="th-inner">NºM:</div></th>
+                            <th><div class="th-inner">Nº Máq.:</div></th>
                             <th><div class="th-inner">Paciente</div></th>
                             <th><div class="th-inner">Leito</div></th>
                             <th><div class="th-inner">Técnico</div></th>
+                            <th><div class="th-inner">Técnico 2</div></th>
+                            <th><div class="th-inner">Técnico 3</div></th>
                             <th><div class="th-inner">Destino</div></th>
-                            <th><div class="th-inner">SUS/AV/ALT/CONS</div></th>
+                            <th><div class="th-inner">Evento</div></th>
                             <th><div class="th-inner">Proc.</div></th>
                             <th><div class="th-inner">Tempo</div></th>
                             <th><div class="th-inner">Início</div></th>
                             <th><div class="th-inner">Fim</div></th>
                             <th><div class="th-inner">Acesso</div></th>
                             <th><div class="th-inner">Sitio</div></th>
-                            <th><div class="th-inner">Preparação</div></th>
+                            <th><div class="th-inner">Precaução</div></th>
                             <th><div class="th-inner">Máq.</div></th>
                             <th><div class="th-inner">OR</div></th>
                             <th><div class="th-inner">Home Choice</div></th>
                             <th><div class="th-inner">Médico</div></th>
                             <th><div class="th-inner">Convênio</div></th>
                             <th><div class="th-inner">Observação</div></th>
+                            <th><div class="th-inner">Situação</div></th>
                         </tr>
                     </thead>
                     <!--<tbody>
@@ -172,6 +175,20 @@
       $(document).ready(function() {
 
           var table = $('#atendimento').DataTable( {
+              "createdRow": function( row, data, dataIndex){
+                switch($.trim(data[24])){
+                    case "DIALISE EM CURSO":
+                        $(row).addClass('yellow_line');
+                        break;
+                    case "AGENDADA":
+                        $(row).addClass('red_line');
+                        break;
+                    case "CONCLUIDA":
+                        $(row).addClass('green_line');
+                        break;
+                }
+              },
+            
               "language": {
                   "sEmptyTable": "Nenhum registro encontrado",
                   "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -197,8 +214,17 @@
                 },
               dom: 'Bfrtip',
               buttons: [
-                  'excel', 'pdf'
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    customize: function ( doc ) {
+                      doc.pageMargins = [5,10];
+                    },
+                    title: 'RELATÓRIO DE ATENDIMENTOS'
+                }              
               ],
+              "pageLength": 50,
               "scrollX": true,
               "processing": true,
               "serverSide": true,

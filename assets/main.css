@@ -218,3 +218,72 @@ a.btn:hover, button:hover {
 .btn-group, .btn-group-vertical{
 	float: right;
 }
+
+/* Autocomplete
+----------------------------------*/
+.ui-autocomplete { position: absolute; cursor: default; }       
+.ui-autocomplete-loading { background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat; }
+
+/* workarounds */
+* html .ui-autocomplete { width:1px; } /* without this, the menu expands to 100% in IE6 */
+
+/* Menu
+----------------------------------*/
+.ui-menu {
+        background-color: #efefef;
+        font-weight: normal;
+        display: block;
+        white-space: pre;
+        min-height: 1.2em;
+        padding: 0px 2px 1px;
+        list-style:none;
+        padding: 12px;
+        margin: 0;
+        -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
+        *border-right-width: 2px;
+        *border-bottom-width: 2px;
+        border-color: rgba(0, 0, 0, 0.2);
+
+}
+.ui-menu .ui-menu {
+        margin-top: -3px;
+}
+.ui-menu .ui-menu-item {
+        margin:0;
+        padding: 0;
+        width: 200px;
+}
+.ui-menu li.ui-menu-item {
+        text-decoration:none;
+        display:block;
+        padding:.5em .5em;
+        line-height:1.5;
+        zoom:1;
+}
+/*.ui-menu li.ui-menu-item:hover,
+.ui-menu li.ui-menu-item:hover{
+        margin: -1px;
+        background-color: #
+}*/
+.ui-helper-hidden-accessible{
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.yellow_line{
+    background-color: #ff0 !important;
+}
+
+.red_line{
+    background-color: #ed7669 !important;
+}
+
+.green_line{
+    background-color: #67b168 !important;
+}

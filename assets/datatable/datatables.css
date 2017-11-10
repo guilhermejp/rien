@@ -4,10 +4,10 @@
  *
  * To rebuild or modify this file with the latest versions of the included
  * software please visit:
- *   https://datatables.net/download/#bs/jq-3.2.1/dt-1.10.16/b-1.4.2/b-flash-1.4.2/b-html5-1.4.2
+ *   https://datatables.net/download/#bs/dt-1.10.16/b-1.4.2/b-html5-1.4.2/jszip-2.5.0/pdfmake-0.1.32/b-print-1.4.2
  *
  * Included libraries:
- *   jQuery 3 3.2.1, DataTables 1.10.16, Buttons 1.4.2, Flash export 1.4.2, HTML5 export 1.4.2
+ *   JSZip 2.5.0, pdfmake 0.1.32, DataTables 1.10.16, Buttons 1.4.2, HTML5 export 1.4.2, Print view 1.4.2
  */
 
 table.dataTable {

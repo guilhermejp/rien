@@ -25,7 +25,7 @@ class View_assistance extends CI_Controller {
                     $p_end = false;
                 }
 
-		$list = $this->View_assistance_model->get_datatables($this->input->post('start'), $this->input->post('lenght'), $this->input->post('search[value]'), $this->input->post('order'), $p_start, $p_end);
+		$list = $this->View_assistance_model->get_datatables($this->input->post('start'), $this->input->post('length'), $this->input->post('search[value]'), $this->input->post('order'), $p_start, $p_end);
 		$data = array();
 		$no = @$this->input->post('start');
 		foreach ($list as $assistance) {
@@ -38,21 +38,24 @@ class View_assistance extends CI_Controller {
                         $row[] = $assistance->patient;
                         $row[] = $assistance->bed;
                         $row[] = $assistance->technician;
+                        $row[] = $assistance->technician2;
+                        $row[] = $assistance->technician3;
                         $row[] = $assistance->destination;
                         $row[] = $assistance->sus;
                         $row[] = $assistance->proc;
                         $row[] = $assistance->time;
-                        $row[] = $assistance->start;
-                        $row[] = $assistance->end;
+                        $row[] = substr($assistance->start,0,5);
+                        $row[] = substr($assistance->end,0,5);
                         $row[] = $assistance->access;
                         $row[] = $assistance->site;
-                        $row[] = $assistance->precaution;
+                        $row[] = $assistance->precaution==1?"Sim":"Não";
                         $row[] = $assistance->maq;
                         $row[] = $assistance->or;
                         $row[] = $assistance->home_choice;
                         $row[] = $assistance->doctor;
                         $row[] = $assistance->agreement;
                         $row[] = $assistance->note;
+                        $row[] = $assistance->situation;
 			$data[] = $row;
 		}
 
